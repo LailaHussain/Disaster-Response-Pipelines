@@ -50,6 +50,11 @@ def index():
     category_counts = []
     for column_name in category:
         category_counts.append(np.sum(df[column_name]))
+    
+    # extract data exclude related
+    categories = df.iloc[:,4:]
+    categories_mean = categories.mean().sort_values(ascending=False)[1:11]
+    categories_names = list(categories_mean.index)
       
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
@@ -87,6 +92,24 @@ def index():
                 },
                 'xaxis': {
                     'title': "Category"
+                }
+            }
+        },
+         {
+            'data': [
+                Bar(
+                    x=categories_names,
+                    y=categories_mean
+                )
+            ],
+
+            'layout': {
+                'title': 'Top 10 Message Categories',
+                'yaxis': {
+                    'title': "Percentage"
+                },
+                'xaxis': {
+                    'title': "Categories"
                 }
             }
         }
